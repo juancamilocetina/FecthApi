@@ -3,6 +3,8 @@ new Vue({
     data() {
       return {
         users: [],
+        arrayUser: [],
+        arrayLogin: [],
         username: '',
         password: '',
         selectedGender: '',
@@ -31,7 +33,15 @@ new Vue({
             break;
           }
         }
-      }
+        // console.log(this.username)
+      },
+      sesionDatos() {
+        if (sessionStorage.getItem("users") !== null) {
+          this.arrayLogin = JSON.parse(sessionStorage.getItem("users"));
+        } else {
+          this.arrayLogin = [];
+        }
+      },
     },
     computed: {
       filteredUsers() {

@@ -40,6 +40,14 @@
       <!-- Fin de sesion -->
 
       <div id="tabla" class="container mt-5 w-30-responsive border p-3" v-else >
+        <li v-for="i in arrayLogin">
+          <a class="nav-link text-white" href="#">
+            <img :src="i.picture.medium" alt="" width="50px" class="rounded-5 me-2">
+            <span class="fw-bold " v-text="i.name.first"></span>
+            <span class="fw-bold" v-text="i.name.last"></span>
+          </a>
+        </li>
+        
         <h3 class="text-center">Lista de usuarios</h3>
         <div class="form-group">
           
@@ -67,7 +75,7 @@
               <td><img :src="user.picture.thumbnail" alt="Foto del usuario"></td>
               <td>{{ user.name.first }}</td>
               <td>{{ user.name.last }}</td>
-              <td><img :src="`https://cors-anywhere.herokuapp.com/https://countryflagsapi.com/flag/${user.nat}.png`" alt="Flag"></td>
+              <td><img :src="`https://countryflagsapi.com/flag/${user.nat}.png`" alt="Flag"></td>
               <td>{{ user.login.username }}</td>
             </tr>
           </tbody>
