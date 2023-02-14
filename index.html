@@ -1,28 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
-      crossorigin="anonymous"
-    />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+    integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
+    integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
+    crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+  <title>Usuarios</title>
 </head>
+
 <body>
-    <div id="app" class="container mt-5 w-50-responsive border p-3">
-        <div v-for="user in users" :key="user.login.uuid">
-          <img :src="user.picture.large" alt="User">
-          <h1>{{user.name.first}} {{user.name.last}}</h1>
-          <p>{{user.location.country}}</p>
+  <div id="app">
+      <!-- Inicio de sesion -->
+      <div id="login" v-if="!loggedIn" class="container mt-5 w-30-responsive border p-3">
+        <h3 class="text-center">Login</h3>
+        <div class="d-flex justify-content-center">
+        <form  @submit.prevent="login">
+          <div>
+            <input type="text" v-model="username" placeholder="Usuario" required />
+          </div>
+          <br>
+          <div>
+            <input type="password" v-model="password"  placeholder="Contraseña" required />
+          </div>
+          <br>
+          <button class="btn btn-primary" type="submit">Ingresar</button>
+        </form>
         </div>
       </div>
+      <!-- Fin de sesion -->
+
+      <div id="tabla" class="container mt-5 w-30-responsive border p-3" v-else >
+        <h3 class="text-center">Lista de usuarios</h3>
+        <div class="form-group">
+          
+            <label for="genderSelect">Selecciona género:</label>
+            <select class="form-control form-control-sm" id="genderSelect" v-model="selectedGender">
+          
+            <option value="">Todos</option>
+            <option value="male">Hombre</option>
+            <option value="female">Mujer</option>
+          </select>
+        </div>
+        
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Foto</th>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Pais</th>
+              <th>Username</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="user in filteredUsers" :key="user.login.uuid">
+              <td><img :src="user.picture.thumbnail" alt="Foto del usuario"></td>
+              <td>{{ user.name.first }}</td>
+              <td>{{ user.name.last }}</td>
+              <td><img :src="`https://cors-anywhere.herokuapp.com/https://countryflagsapi.com/flag/${user.nat}.png`" alt="Flag"></td>
+              <td>{{ user.login.username }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     
-    
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
-    <script src="./main.js"></script>
+
+  </div>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.0-alpha.4/vue.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="main.js"></script>
+
 </html>
